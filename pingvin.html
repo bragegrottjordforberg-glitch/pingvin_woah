@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+    <style>
+        #img {
+            margin: 20px;
+            padding-left: 20px;
+            padding-top: 20px;
+            
+        }
+    </style>
+</head>
+<body>
+    <input id="myInput" onchange="setName()">
+    <button onclick="updateView()">Navngi pingvinen!</button>
+    <div id="textbox"></div>
+
+    <script>
+        let hunger = 50;
+        let age = 1;
+        let clean = "Stinker og stanker...";
+        let warmth = 50;
+        let time = 10;
+        let name = '';
+
+        function setName(){
+            name = document.getElementById('myInput').value;
+            console.log(name)
+            updateView()
+        }
+
+        
+
+        function updateView(){
+            let html = `${clean}`
+            document.getElementById('textbox').innerHTML = /*html*/`
+            <br>
+            Pingvinen din = ${name}
+            <br>
+            <img id="img" src="OIP.png" onclick="penguinClicked">
+            <br>
+            <div> Sult = ${hunger}/100</div>
+            <div> Varme = ${warmth}/100</div>
+            <div> Renslighet = ${clean}</div>
+            <div> Alder = ${age}/18</div>
+            
+            `
+           
+        }
+
+        function matetPingvin(){
+            hunger += 15;
+            let randomWarmth = Math.floor(Math.random() *25) +1;
+            warmth -= randomWarmth;
+            age +=1;
+
+            let randomClean = Math.floor(Math.random() *3);
+            if (randomClean >= 1) {
+                clean = "Stinker og stanker";
+            } 
+            
+            
+            
+
+            updateView()
+        }
+
+        function varmetPingvinen(){
+            warmth += 15;
+            let randomHunger = Math.floor(Math.random() * 25) +1;
+            hunger -= randomHunger;
+            age +=1;
+            let randomClean = Math.floor(Math.random() *3);
+            if (randomClean >= 1) {
+                clean = "Stinker og stanker";
+            } 
+            
+            updateView()
+        }
+
+        function vasketPingvinen(){
+            age += 1;
+             let randomHunger = Math.floor(Math.random() * 25) +1;
+            hunger -= randomHunger;
+            let randomWarmth = Math.floor(Math.random() *25) +1;
+            warmth -= randomWarmth;
+            clean = "Ren og pen";
+           
+            updateView()
+        }
+
+    
+
+    
+
+        
+        </script>
+        <button id="timePasses" onclick="matetPingvin()">Mat pingvinen?</button>
+        <button id="timePasses" onclick="vasketPingvinen()">Vask pingvinen?</button>
+        <button id="timePasses" onclick="varmetPingvinen()">Varm opp pingvinen?</button>
+        
+
+
+    
+</body>
+</html>
