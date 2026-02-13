@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
+    <link rel="stylesheet" href="style.css">
 
     <style>
         #img {
@@ -15,8 +16,8 @@
     </style>
 </head>
 <body>
-    <input id="myInput" onchange="setName()">
-    <button onclick="updateView()">Navngi pingvinen!</button>
+    <input id="myInput" onchange="setName(this)" placeholder="Navngi pingvinen">
+    <!-- <button onclick="updateView()">Navngi pingvinen!</button> -->
     <div id="textbox"></div>
 
     <script>
@@ -27,8 +28,8 @@
         let time = 10;
         let name = '';
 
-        function setName(){
-            name = document.getElementById('myInput').value;
+        function setName(inputField){
+            name = inputField.value;
             console.log(name)
             updateView()
         }
@@ -47,17 +48,28 @@
             <div> Varme = ${warmth}/100</div>
             <div> Renslighet = ${clean}</div>
             <div> Alder = ${age}/18</div>
-            
+            <img src="mat.png" class="food"  onclick="matetPingvin()"> 
+        <button class="vaske" onclick="vasketPingvinen()">Vask pingvinen?</button>
+        <button class= "varme" onclick="varmetPingvinen()">Varm opp pingvinen?</button>
             `
            
         }
-
+        
         function matetPingvin(){
-            hunger += 15;
+          
+            if (hunger >= 1) {hunger += 15;
             let randomWarmth = Math.floor(Math.random() *25) +1;
             warmth -= randomWarmth;
             age +=1;
-
+    }    else {
+        gameOver("Pingvinen er sulten!")
+        // alert("Pingvinen er sulten!")
+    }
+    if (warmth <= 1) {
+        // alert ("Pingvinen er altfor kald!")
+        gameOver("Pingvinen er altfor kald!")
+        
+    }
             let randomClean = Math.floor(Math.random() *3);
             if (randomClean >= 1) {
                 clean = "Stinker og stanker";
@@ -68,12 +80,24 @@
 
             updateView()
         }
-
+        
         function varmetPingvinen(){
+            
+            if (warmth >= 1) {
             warmth += 15;
             let randomHunger = Math.floor(Math.random() * 25) +1;
             hunger -= randomHunger;
-            age +=1;
+            age +=1;} else {
+                gameOver("Pingvinen er altfor kald!")
+                //alert ("Pingvinen er altfor kald!")
+            }
+
+            if (hunger <= 1) {
+                gameOver("Pingvinen er sulten!")
+                //alert ("Pingvinen er sulten!")                
+            } 
+               
+                
             let randomClean = Math.floor(Math.random() *3);
             if (randomClean >= 1) {
                 clean = "Stinker og stanker";
@@ -93,15 +117,21 @@
             updateView()
         }
 
+        function gameOver(message){
+            document.getElementById('textbox').innerHTML = /*html*/`
+            <div>
+                <h1>Game over</h1>
+                <h2>${message}</h2>
+            </div>
+            `;
+        }
     
 
     
 
         
         </script>
-        <button id="timePasses" onclick="matetPingvin()">Mat pingvinen?</button>
-        <button id="timePasses" onclick="vasketPingvinen()">Vask pingvinen?</button>
-        <button id="timePasses" onclick="varmetPingvinen()">Varm opp pingvinen?</button>
+        
         
 
 
